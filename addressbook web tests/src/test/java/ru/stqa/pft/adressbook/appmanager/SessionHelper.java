@@ -1,14 +1,18 @@
 package ru.stqa.pft.adressbook.appmanager;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-/**
- * Created by vlady on 31.05.16.
- */
-public class SessionHelper {
-    private FirefoxDriver wd;
+public class SessionHelper  extends HelperBase {
 
     public SessionHelper(FirefoxDriver wd) {
-        this.wd = wd;
+        super(wd);
     }
+
+    public void Login (String username, String password) {
+        type(By.name("user"), username);
+        type(By.name("pass"), password);
+        click(By.xpath("//form[@id='LoginForm']/input[3]"));
+    }
+
 }
