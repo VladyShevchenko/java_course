@@ -23,4 +23,28 @@ public class ContactHelper extends HelperBase {
 
     }
 
+    public void selectContact() {
+        click(By.xpath("//input[@type=\"checkbox\"]"));
+    }
+
+    public void DeleteContact() {
+        click(By.xpath("//input[@value=\"Delete\"]"));
+    }
+
+    public void ConfirmJsAlert() {
+        wd.switchTo().alert().accept();
+    }
+
+    public void EditContact() {
+        click(By.xpath("//img[@title=\"Edit\"]"));
+    }
+
+    public void SubmitUpdate() {
+        click(By.xpath("//input[@value=\"Update\"]"));
+    }
+
+
+
+
+
 }
