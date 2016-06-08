@@ -13,7 +13,7 @@ public class ContactModification extends TestBase {
         app.getNavigationHelper().gotoHomePage();
         app.getContactHelper().selectContact();
         app.getContactHelper().EditContact();
-        app.getContactHelper().fillContactForm(new ContactData("firstname1", "lastname1", "new@email.com", "+0987654321"));
+        app.getContactHelper().fillContactForm(new ContactData("firstname1", "lastname1", "new@email.com", "+0987654321", null), false);
         app.getContactHelper().SubmitUpdate();
         app.getNavigationHelper().gotoHomePage();
         Thread.sleep(2000);
