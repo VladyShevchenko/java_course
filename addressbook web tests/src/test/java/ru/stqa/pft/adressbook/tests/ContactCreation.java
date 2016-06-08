@@ -7,7 +7,7 @@ public class ContactCreation  extends TestBase {
 
     @Test
     public void testContactCreation() throws InterruptedException {
-        app.getNavigationHelper().addNewContanct();
+        app.getNavigationHelper().addNewContact();
         app.getContactHelper().fillContactForm(new ContactData("firstname", "lastname", "email@email.com", "+1234567890", "test1"), true);
         app.getContactHelper().submitContactCreation();
         app.getNavigationHelper().gotoHomePage();
