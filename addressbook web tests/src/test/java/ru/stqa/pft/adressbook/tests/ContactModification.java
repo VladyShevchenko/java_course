@@ -1,5 +1,6 @@
 package ru.stqa.pft.adressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.adressbook.model.ContactData;
 
@@ -11,6 +12,7 @@ public class ContactModification extends TestBase {
     @Test
     public void testContactModification() throws InterruptedException {
         app.getNavigationHelper().gotoHomePage();
+        int before = app.getGroupHelper().getGroupCount();
         if (!app.getContactHelper().isThereAContact()) {
             app.getNavigationHelper().addNewContact();
             app.getContactHelper().createContact(new ContactData("firstname", "lastname", "email@email.com", "+1234567890", "test1"), true);
@@ -21,6 +23,8 @@ public class ContactModification extends TestBase {
         app.getContactHelper().fillContactForm(new ContactData("firstname1", "lastname1", "new@email.com", "+0987654321", null), false);
         app.getContactHelper().SubmitUpdate();
         app.getNavigationHelper().gotoHomePage();
+        int after = app.getGroupHelper().getGroupCount();
+        Assert.assertEquals(after, before);
         Thread.sleep(2000);
 
     }
