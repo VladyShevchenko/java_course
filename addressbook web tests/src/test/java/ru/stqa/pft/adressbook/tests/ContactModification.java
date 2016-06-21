@@ -11,6 +11,11 @@ public class ContactModification extends TestBase {
     @Test
     public void testContactModification() throws InterruptedException {
         app.getNavigationHelper().gotoHomePage();
+        if (!app.getContactHelper().isThereAContact()) {
+            app.getNavigationHelper().addNewContact();
+            app.getContactHelper().createContact(new ContactData("firstname", "lastname", "email@email.com", "+1234567890", "test1"), true);
+            app.getNavigationHelper().gotoHomePage();
+        }
         app.getContactHelper().selectContact();
         app.getContactHelper().EditContact();
         app.getContactHelper().fillContactForm(new ContactData("firstname1", "lastname1", "new@email.com", "+0987654321", null), false);
