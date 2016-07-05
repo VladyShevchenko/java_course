@@ -9,13 +9,13 @@ import java.util.List;
 
 public class ContactCreation  extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testContactCreation() throws InterruptedException {
         List<ContactData> before = app.getContactHelper().getContactList();
-        app.getNavigationHelper().addNewContact();
+        app.goTo().addNewContact();
         ContactData contact = new ContactData("firstname", "lastname", "email@email.com", "+1234567890", "test1");
         app.getContactHelper().createContact(contact, true);
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() + 1);
 

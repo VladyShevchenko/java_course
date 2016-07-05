@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class ContactModification extends TestBase {
 
-    @Test
+    @Test(enabled = false)
     public void testContactModification() throws InterruptedException {
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
         if (!app.getContactHelper().isThereAContact()) {
-            app.getNavigationHelper().addNewContact();
+            app.goTo().addNewContact();
             app.getContactHelper().createContact(new ContactData("firstname", "lastname", "email@email.com", "+1234567890", "test1"), true);
-            app.getNavigationHelper().gotoHomePage();
+            app.goTo().gotoHomePage();
         }
         List<ContactData> before = app.getContactHelper().getContactList();
         app.getContactHelper().selectContact(1);
@@ -26,7 +26,7 @@ public class ContactModification extends TestBase {
         ContactData contact = new ContactData(before.get(before.size() -1).getId(),"firstname", "lastname", "new@email.com", "+0987654321", null);
         app.getContactHelper().fillContactForm(contact, false);
         app.getContactHelper().SubmitUpdate();
-        app.getNavigationHelper().gotoHomePage();
+        app.goTo().gotoHomePage();
 
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after, before);
