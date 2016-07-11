@@ -32,9 +32,29 @@ public class ContactData {
         return id;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (id != that.id) return false;
+        return firsname != null ? firsname.equals(that.firsname) : that.firsname == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (firsname != null ? firsname.hashCode() : 0);
+        return result;
+    }
+
     public ContactData withId(int id) {
         this.id = id;
         return this;
+
     }
 
     public ContactData withPhone(String phone) {
@@ -60,25 +80,6 @@ public class ContactData {
     public ContactData withFirsname(String firsname) {
         this.firsname = firsname;
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ContactData that = (ContactData) o;
-
-        if (firsname != null ? !firsname.equals(that.firsname) : that.firsname != null) return false;
-        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        int result = firsname != null ? firsname.hashCode() : 0;
-        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
-        return result;
     }
 
     @Override

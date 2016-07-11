@@ -1,6 +1,5 @@
 package ru.stqa.pft.adressbook.appmanager;
 
-import com.thoughtworks.selenium.webdriven.commands.IsElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
