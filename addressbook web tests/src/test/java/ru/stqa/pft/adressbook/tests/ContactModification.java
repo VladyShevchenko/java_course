@@ -1,11 +1,18 @@
 package ru.stqa.pft.adressbook.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.adressbook.model.ContactData;
+import ru.stqa.pft.adressbook.model.Contacts;
 
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 
 public class ContactModification extends TestBase {
 
@@ -22,19 +29,16 @@ public class ContactModification extends TestBase {
 
     @Test
     public void testContactModification() throws InterruptedException {
-        Set<ContactData> before = app.contact().all();
+        Contacts before = app.contact().all();
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData().withId(modifiedContact.getId())
                 .withFirsname("firstname").withLastname("lastname").withEmail("new@email.com").withPhone("+0987654321").withGroup("test1");
         app.contact().modify(contact);
         app.goTo().HomePage();
+        Contacts after = app.contact().all();
 
-        Set<ContactData> after = app.contact().all();
-        Assert.assertEquals(after, before);
-
-        before.remove(modifiedContact);
-        before.add(contact);
-        Assert.assertEquals(before, after);
+        assertEquals(before, after);
+        assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
 
     }
 }
