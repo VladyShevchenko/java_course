@@ -34,32 +34,32 @@ public class ContactData {
     }
 
     public ContactData withMobilePhone(String mobile) {
-        this.home = mobile;
+        this.mobile = mobile;
         return this;
     }
 
     public ContactData withWorkPhone(String work) {
-        this.home = work;
+        this.work = work;
         return this;
     }
 
     public ContactData withAddress(String address) {
-        this.home = address;
+        this.address = address;
         return this;
     }
 
     public ContactData withEmail(String email) {
-        this.home = email;
+        this.email = email;
         return this;
     }
 
     public ContactData withEmail2(String email2) {
-        this.email = email2;
+        this.email2 = email2;
         return this;
     }
 
     public ContactData withEmail3(String email3) {
-        this.email = email3;
+        this.email3 = email3;
         return this;
     }
 
