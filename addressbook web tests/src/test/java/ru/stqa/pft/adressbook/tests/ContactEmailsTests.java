@@ -1,7 +1,6 @@
 package ru.stqa.pft.adressbook.tests;
 
 import org.testng.annotations.Test;
-import org.testng.internal.junit.ArrayAsserts;
 import ru.stqa.pft.adressbook.model.ContactData;
 
 import java.util.Arrays;
@@ -11,21 +10,21 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 
-public class ContactPhoneTest extends TestBase{
+public class ContactEmailsTests extends TestBase{
 
     @Test
-    public void testContactPhone() {
+    public void EmailsTest(){
         app.goTo().HomePage();
         ContactData contact = app.contact().all().iterator().next();
-        ContactData contactInfoFromEditForm = app.contact().infoFromEditForm(contact);
+        ContactData emailsInfoFromEditForm = app.contact().infoFromEditForm(contact);
 
-        assertThat(contact.getAllPhones(), equalTo(mergePhones(contactInfoFromEditForm)));
+        assertThat(contact.getAllEmails(), equalTo(mergeEmails(emailsInfoFromEditForm)));
     }
 
-    private String mergePhones(ContactData contact) {
-        return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone())
+    private String mergeEmails(ContactData contact) {
+        return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmai3())
                 .stream().filter((s) -> !s.equals(""))
-                .map(ContactPhoneTest::cleaned)
+                .map(ContactEmailsTests:: cleaned)
                 .collect(Collectors.joining("\n"));
     }
 
