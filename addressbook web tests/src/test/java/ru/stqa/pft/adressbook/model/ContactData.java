@@ -14,6 +14,16 @@ public class ContactData {
     private String group;
     private String allPhones;
     private String allEmails;
+    private String allData;
+
+    public String getAllData() {
+        return allData;
+    }
+
+    public ContactData withAllData(String allData) {
+        this.allData = allData;
+        return this;
+    }
 
     public String getAllPhones() {
         return allPhones;
@@ -160,5 +170,6 @@ public class ContactData {
         result = 31 * result + (firsname != null ? firsname.hashCode() : 0);
         return result;
     }
+
 
 }

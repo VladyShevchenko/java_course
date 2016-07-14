@@ -8,6 +8,7 @@ import org.testng.Assert;
 import ru.stqa.pft.adressbook.model.ContactData;
 import ru.stqa.pft.adressbook.model.Contacts;
 
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -136,5 +137,15 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.cssSelector(String.format("a[href='edit.php?id=%s']", id))).click();
     }
 
+    public ContactData infoFromCardForm(ContactData contact) {
+        openContactCardById(contact.getId());
+        String allData = wd.findElement(By.id("content")).getText();
+        wd.navigate().back();
+        return new ContactData().withAllData(allData);
+    }
+
+    private void openContactCardById(int id) {
+        wd.findElement(By.cssSelector(String.format("a[href= 'view.php?id=%s']", id))).click();
+    }
 }
 
