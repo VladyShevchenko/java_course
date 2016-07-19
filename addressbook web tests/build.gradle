@@ -11,6 +11,8 @@ dependencies {
     compile 'org.hamcrest:java-hamcrest:2.0.0.0'
     compile 'com.thoughtworks.xstream:xstream:1.4.9'
     compile 'com.google.code.gson:gson:2.7'
+    compile 'ch.qos.logback:logback-parent:1.1.7'
+    compile 'mysql:mysql-connector-java:6.0.3'
 }
 
 task testContacts(type: Test) {
