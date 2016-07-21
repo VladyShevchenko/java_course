@@ -50,15 +50,15 @@ public class ContactCreation  extends TestBase {
         return contacts.stream().map((c) -> new Object[]{c}).collect(Collectors.toList()).iterator();
     }
 
-    @Test(dataProvider = "validContactsFromJson")
-    public void testContactCreation(ContactData contact) throws InterruptedException {
+    @Test/*(dataProvider = "validContactsFromJson")*/
+    public void testContactCreation(/*ContactData contact*/) throws InterruptedException {
         Contacts before = app.contact().all();
         app.goTo().addNewContact();
-    /*    File photo = new File("src/test/resources/test.png");
+        File photo = new File("src/test/resources/test.png");
         ContactData contact = new ContactData()
                 .withFirsname("vlad1").withLastname("vlad2").withHomePhone("+1234567890").
                         withMobilePhone("+0987654321").withWorkPhone("+0000000000").withAddress("Ukraine").
-                        withEmail("test1@email.com").withEmail2("test2@email.com").withEmail3("test3@email.com").withPhoto(photo);*/
+                        withEmail("test1@email.com").withEmail2("test2@email.com").withEmail3("test3@email.com").withPhoto(photo);
         app.contact().create(contact, true);
         app.goTo().HomePage();
         assertThat(app.contact().count(), equalTo(before.size() +1));
