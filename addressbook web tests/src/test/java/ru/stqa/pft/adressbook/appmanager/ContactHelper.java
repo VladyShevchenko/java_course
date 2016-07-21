@@ -24,7 +24,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillContactForm(ContactData contactData, boolean creation) {
+    public void fillContactForm(ContactData contactData) {
         type(By.name("firstname"), contactData.getFirsname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("home"), contactData.getHomePhone());
@@ -42,6 +42,17 @@ public class ContactHelper extends HelperBase {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
     */
+    }
+    public void modifyContactForm(ContactData contactData) {
+        type(By.name("firstname"), contactData.getFirsname());
+        type(By.name("lastname"), contactData.getLastname());
+        type(By.name("home"), contactData.getHomePhone());
+        type(By.name("mobile"), contactData.getMobilePhone());
+        type(By.name("work"), contactData.getWorkPhone());
+        type(By.name("address"), contactData.getAddress());
+        type(By.name("email"), contactData.getEmail());
+        type(By.name("email2"), contactData.getEmail2());
+        type(By.name("email3"), contactData.getEmai3());
     }
 
      public void selectContactById(int id) {
@@ -65,8 +76,8 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public void create(ContactData contact, boolean b) {
-        fillContactForm(contact, b);
+    public void create(ContactData contact) {
+        fillContactForm(contact);
         submitContactCreation();
         contactCache = null;
     }
@@ -74,7 +85,7 @@ public class ContactHelper extends HelperBase {
     public void modify(ContactData contact) {
         selectContactById(contact.getId());
         EditContact();
-        fillContactForm(contact, false);
+        modifyContactForm(contact);
         contactCache = null;
         SubmitUpdate();
     }

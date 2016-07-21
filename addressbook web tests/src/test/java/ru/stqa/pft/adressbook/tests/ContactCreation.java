@@ -59,7 +59,7 @@ public class ContactCreation  extends TestBase {
                 .withFirsname("vlad1").withLastname("vlad2").withHomePhone("+1234567890").
                         withMobilePhone("+0987654321").withWorkPhone("+0000000000").withAddress("Ukraine").
                         withEmail("test1@email.com").withEmail2("test2@email.com").withEmail3("test3@email.com").withPhoto(photo);
-        app.contact().create(contact, true);
+        app.contact().create(contact);
         app.goTo().HomePage();
         assertThat(app.contact().count(), equalTo(before.size() +1));
         Contacts after = app.contact().all();
@@ -73,7 +73,7 @@ public class ContactCreation  extends TestBase {
         app.goTo().addNewContact();
         ContactData contact = new ContactData()
                 .withFirsname("firstname'").withLastname("lastname").withEmail("email@email.com").withHomePhone("+1234567890").withGroup("test1");
-        app.contact().create(contact, true);
+        app.contact().create(contact);
         app.goTo().HomePage();
         assertThat(app.contact().count(), equalTo(before.size()));
         Contacts after = app.contact().all();

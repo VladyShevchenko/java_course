@@ -24,7 +24,7 @@ public class ContactDeletion extends TestBase {
             app.contact().create(new ContactData()
                     .withFirsname("firstname").withLastname("lastname").withAddress("Sunrise 32 St, NY, USA")
                     .withHomePhone("+1234567890").withMobilePhone("+(123)456-78-90").withWorkPhone("123-456-789-0").
-                            withEmail("test@email.com").withEmail2("test2@email.com").withEmail3("test3@email.com").withGroup("test1"), true);
+                            withEmail("test@email.com").withEmail2("test2@email.com").withEmail3("test3@email.com").withGroup("test1"));
             app.goTo().HomePage();
         }
     }
