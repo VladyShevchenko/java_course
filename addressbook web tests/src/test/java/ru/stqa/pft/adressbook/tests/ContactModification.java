@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.adressbook.model.ContactData;
 import ru.stqa.pft.adressbook.model.Contacts;
 
+import java.io.File;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -18,27 +19,29 @@ public class ContactModification extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions () {
-        app.goTo().HomePage();
-        if (app.contact().all().size() == 0) {
+        if (app.db().contacts().size()==0) {
+            app.goTo().HomePage();
             app.goTo().addNewContact();
+            File photo = new File("src/test/resources/test.png");
             app.contact().create(new ContactData()
                     .withFirsname("firstname").withLastname("lastname").withAddress("Sunrise 32 St, NY, USA")
-                    .withHomePhone("+1234567890").withMobilePhone("+(123)456-78-90").withWorkPhone("123-456-789-0").
-                            withEmail("test@email.com").withEmail2("test2@email.com").withEmail3("test3@email.com").withGroup("test1"));
+                    .withHomePhone("+1234567890").withEmail("test@email.com").withEmail2("email2@email.com").withEmail3("email3@email.com").withPhoto(photo));
             app.goTo().HomePage();
         }
     }
 
     @Test
     public void testContactModification() throws InterruptedException {
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData().withId(modifiedContact.getId())
-                .withFirsname("firstname").withLastname("lastname").withEmail("new@email.com").withHomePhone("+0987654321").withGroup("test1");
+                .withFirsname("NEWfirstname").withLastname("NEWlastname").
+                        withEmail("new@email.com").withEmail2("updatedemail2@email.com").withEmail3("updatedemail3@email.com").withAddress("Sunrise 33 St, NY, USA")
+                .withMobilePhone("+0987654321").withHomePhone("+12345678901").withWorkPhone("+0000000000");
         app.contact().modify(contact);
         app.goTo().HomePage();
         assertThat(app.contact().count(), equalTo(before.size()));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
     }
 }
