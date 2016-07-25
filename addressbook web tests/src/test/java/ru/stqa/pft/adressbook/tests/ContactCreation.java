@@ -8,6 +8,7 @@ import ru.stqa.pft.adressbook.model.ContactData;
 import ru.stqa.pft.adressbook.model.Contacts;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import ru.stqa.pft.adressbook.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -53,12 +54,13 @@ public class ContactCreation  extends TestBase {
     @Test/*(dataProvider = "validContactsFromJson")*/
     public void testContactCreation(/*ContactData contact*/) throws InterruptedException {
         Contacts before = app.db().contacts();
+        Groups groups = app.db().groups();
         app.goTo().addNewContact();
         File photo = new File("src/test/resources/test.png");
         ContactData contact = new ContactData()
                 .withFirsname("vlad1").withLastname("vlad2").withHomePhone("+1234567890").
                         withMobilePhone("+0987654321").withWorkPhone("+0000000000").withAddress("Ukraine").
-                        withEmail("test1@email.com").withEmail2("test2@email.com").withEmail3("test3@email.com").withPhoto(photo);
+                        withEmail("test1@email.com").withEmail2("test2@email.com").withEmail3("test3@email.com").withPhoto(photo).inGroup(groups.iterator().next());
         app.contact().create(contact);
         app.goTo().HomePage();
         assertThat(app.contact().count(), equalTo(before.size() +1));
@@ -73,7 +75,7 @@ public class ContactCreation  extends TestBase {
         Contacts before = app.db().contacts();
         app.goTo().addNewContact();
         ContactData contact = new ContactData()
-                .withFirsname("firstname'").withLastname("lastname").withEmail("email@email.com").withHomePhone("+1234567890").withGroup("test1");
+                .withFirsname("firstname'").withLastname("lastname").withEmail("email@email.com").withHomePhone("+1234567890");
         app.contact().create(contact);
         app.goTo().HomePage();
         assertThat(app.contact().count(), equalTo(before.size()));

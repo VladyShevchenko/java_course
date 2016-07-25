@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.adressbook.model.ContactData;
 import ru.stqa.pft.adressbook.model.Contacts;
+import ru.stqa.pft.adressbook.model.GroupData;
 
 
 import java.util.HashSet;
@@ -24,7 +25,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean creation) {
         type(By.name("firstname"), contactData.getFirsname());
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("home"), contactData.getHomePhone());
@@ -35,13 +36,29 @@ public class ContactHelper extends HelperBase {
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmai3());
         attach(By.name("photo"), contactData.getPhoto());
-    /*
-        if (creation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+    }
+
+    public void fillContactWithoutPhotoForm(ContactData contactData, boolean creation) {
+        type(By.name("firstname"), contactData.getFirsname());
+        type(By.name("lastname"), contactData.getLastname());
+        type(By.name("home"), contactData.getHomePhone());
+        type(By.name("mobile"), contactData.getMobilePhone());
+        type(By.name("work"), contactData.getWorkPhone());
+        type(By.name("address"), contactData.getAddress());
+        type(By.name("email"), contactData.getEmail());
+        type(By.name("email2"), contactData.getEmail2());
+        type(By.name("email3"), contactData.getEmai3());
+
+
+      if (creation) {
+         if (contactData.getGroups().size() > 0)  {
+             Assert.assertTrue(contactData.getGroups().size() == 1);
+             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups().iterator().next().getName());
+         }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
-    */
+
     }
     public void modifyContactForm(ContactData contactData) {
         type(By.name("firstname"), contactData.getFirsname());
@@ -77,7 +94,7 @@ public class ContactHelper extends HelperBase {
 
 
     public void create(ContactData contact) {
-        fillContactForm(contact);
+        fillContactWithoutPhotoForm(contact, true);
         submitContactCreation();
         contactCache = null;
     }
@@ -159,6 +176,30 @@ public class ContactHelper extends HelperBase {
 
     private void openContactCardById(int id) {
         wd.findElement(By.cssSelector(String.format("a[href= 'view.php?id=%s']", id))).click();
+    }
+
+    public void addToGroup(ContactData contact, GroupData group) {
+        selectContactById(contact.getId());
+        selectGroupForAdding(group.getName());
+        click(By.name("add"));
+        click(By.xpath(".//*[@id='content']/div/i/a"));
+    }
+
+    public void removeFromGroup(ContactData contact, GroupData group) {
+        selectGroupForRemoval(group.getName());
+        selectContactById(contact.getId());
+        click(By.name("remove"));
+        click(By.xpath(".//*[@id='content']/div/i/a"));
+    }
+
+    private void selectGroupForAdding(String groupName) {
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
+
+    }
+
+    private void selectGroupForRemoval(String groupName) {
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
+
     }
 }
 
