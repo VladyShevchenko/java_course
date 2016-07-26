@@ -26,18 +26,13 @@ public class RegistrationTests extends TestBase{
         String user = String.format("user%s", now);
         String password = "password";
         String email = String.format("user%s@localhost.localdomain", now);
-        app.registration().start("user1", email);
+        app.mantis().SignUp(user, email);
         List<MailMessage> mailMessages = app.mail().waitForMail(2, 10000);
-        String confirmationLink  = findConfirmationLink(mailMessages, email);
-        app.registration().finish(confirmationLink,password);
+        String confirmation = app.mail().GetURL(mailMessages, email);
+        app.mantis().setNewPassword(confirmation, password);
         assertTrue(app.newSession().login(user,password));
     }
 
-    private String findConfirmationLink(List<MailMessage> mailMesages, String email) {
-        MailMessage mailMessage=mailMesages.stream().filter((m)->m.to.equals(email)).findFirst().get();
-        VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
-        return regex.getText(mailMessage.text);
-    }
 
     @AfterMethod
     public void stopMailServer() {
