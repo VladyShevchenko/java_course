@@ -68,7 +68,7 @@ public class ContactAndGroupTests extends TestBase {
 
     }
 
-    @Test(dependsOnMethods = "ContactAddedToGroup")
+    @Test(dependsOnMethods = "ContactAddedToGroup", enabled = false)
     public void ContactRemovedFromGroup() {
         app.goTo().HomePage();
         Groups before = directContact.getGroups();

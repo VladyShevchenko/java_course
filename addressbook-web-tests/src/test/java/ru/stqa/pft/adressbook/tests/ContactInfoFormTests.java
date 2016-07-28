@@ -26,7 +26,7 @@ public class ContactInfoFormTests extends TestBase{
         }
     }
 
-    @Test
+    @Test (enabled = false)
     public void testContactCard() {
         app.goTo().HomePage();
         ContactData contact = app.contact().all().iterator().next();

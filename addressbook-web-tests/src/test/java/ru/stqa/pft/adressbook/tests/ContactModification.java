@@ -30,7 +30,7 @@ public class ContactModification extends TestBase {
         }
     }
 
-    @Test
+    @Test (enabled = false)
     public void testContactModification() throws InterruptedException {
         Contacts before = app.db().contacts();
         ContactData modifiedContact = before.iterator().next();
