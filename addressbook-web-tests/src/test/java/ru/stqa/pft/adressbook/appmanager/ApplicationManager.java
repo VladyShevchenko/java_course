@@ -1,16 +1,20 @@
 package ru.stqa.pft.adressbook.appmanager;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -36,14 +40,19 @@ public class ApplicationManager {
 
         dbHelper = new DbHelper();
 
-        if(browser.equals(BrowserType.FIREFOX)) {
-            wd = new FirefoxDriver();
-        } else if (browser.equals(BrowserType.CHROME)) {
-            wd = new ChromeDriver();
-        } else if (browser.equals(BrowserType.IE)) {
-            wd = new InternetExplorerDriver();
-        } else if (browser.equals(BrowserType.SAFARI)) {
-            wd = new SafariDriver();
+        if("".equals(properties.getProperty("selenium.server"))) {
+            if(browser.equals(BrowserType.FIREFOX)) {
+                wd = new FirefoxDriver();
+            } else if (browser.equals(BrowserType.CHROME)) {
+                wd = new ChromeDriver();
+            } else if (browser.equals(BrowserType.IE)) {
+                wd = new InternetExplorerDriver();
+            } else if (browser.equals(BrowserType.SAFARI)) {
+                wd = new SafariDriver();
+        } else {
+                DesiredCapabilities capabilites = new DesiredCapabilities();
+                capabilites.setBrowserName(browser);
+                wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilites);
         }
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
@@ -52,8 +61,7 @@ public class ApplicationManager {
         sessionHelper = new SessionHelper(wd);
         sessionHelper.Login(properties.getProperty("web.adminLogin"), properties.getProperty("web.adminPassword"));
         contactHelper = new ContactHelper(wd);
-
-
+        }
     }
 
     public void stop() { wd.quit();
