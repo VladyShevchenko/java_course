@@ -17,9 +17,7 @@ dependencies {
 }
 
 test {
-    useTestNG(){
-        suites 'src/test/resources/testng-contacts.xml'
-    }
+    useTestNG()
 }
 
 task testGroups(type: Test) {
